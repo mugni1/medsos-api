@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { response } from "../utils/response.js";
 import { loginSchemaValidate, registerSchemaValidate } from "../validations/auth.validate.js";
 import { comparePassword, hashedPassword } from "../utils/bcrypt.js";
-import { findUserByEmailService, findUserByUsernameService, registerService } from "../services/auth.service.js";
+import { findUserByEmailService, findUserByIdService, findUserByUsernameService, registerService } from "../services/auth.service.js";
 import { generateToken } from "../utils/jwt.js";
 
 export const register = async (req: Request, res: Response) => {
@@ -68,4 +68,14 @@ export const login = async (req: Request, res: Response) => {
 
     // response
     return response({ res, message: "Login Successfully", data: { user, token } })
+}
+
+export const me = async (req: Request, res: Response) => {
+    const userId = req.userId
+    try {
+        const user = await findUserByIdService(userId as string)
+        return response({ res, status: 200, message: "Successfully get me", data: user })
+    } catch {
+        return response({ res, status: 500, message: "Internal Server Error" })
+    }
 }
