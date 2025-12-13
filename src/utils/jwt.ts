@@ -15,7 +15,7 @@ export const generateToken = (payload: { id: string }) => {
 
 export const decodeToken = (token: string): MyJwtPayload | null => {
     try {
-        return jwt.verify(token, process.env.SECRET_KEY as string) as MyJwtPayload;
+        return jwt.verify(token, process.env.JWT_SECRET_KEY as string) as MyJwtPayload;
     } catch (error) {
         return null;
     }
