@@ -4,6 +4,7 @@ import { loginSchemaValidate, registerSchemaValidate } from "../validations/auth
 import { comparePassword, hashedPassword } from "../utils/bcrypt.js";
 import { findUserByEmailService, findUserByIdService, findUserByUsernameService, registerService } from "../services/auth.service.js";
 import { generateToken } from "../utils/jwt.js";
+import { redis } from "../lib/redis.js";
 
 export const register = async (req: Request, res: Response) => {
     const { success, error, data } = registerSchemaValidate.safeParse(req.body);
@@ -72,9 +73,20 @@ export const login = async (req: Request, res: Response) => {
 
 export const me = async (req: Request, res: Response) => {
     const userId = req.userId
+
     try {
+        const userCache = await redis.get(`user:${userId}`)
+        if (userCache) {
+            console.log("From redis")
+            return response({ res, status: 200, message: "Successfully Get Me", data: userCache })
+        }
+
         const user = await findUserByIdService(userId as string)
-        return response({ res, status: 200, message: "Successfully get me", data: user })
+        await redis.set(`user:${userId}`, user, {
+            ex: 60 * 30,
+        })
+
+        return response({ res, status: 200, message: "Successfully Get Me", data: user })
     } catch {
         return response({ res, status: 500, message: "Internal Server Error" })
     }
