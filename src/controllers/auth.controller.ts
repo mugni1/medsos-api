@@ -75,12 +75,10 @@ export const me = async (req: Request, res: Response) => {
     const userId = req.userId
 
     try {
-        let isRedis = false;
         // check cache and return id cache exist
         const userCache = await redis.get(`user:${userId}`)
         if (userCache) {
-            isRedis = true
-            return response({ res, status: 200, message: "Successfully Get Me", data: userCache })
+            return response({ res, status: 200, message: "Successfully Get Me from redis", data: userCache })
         }
 
         // query to db and set data to redis
@@ -88,7 +86,7 @@ export const me = async (req: Request, res: Response) => {
         await redis.set(`user:${userId}`, user, {
             ex: 60 * 30,
         })
-        return response({ res, status: 200, message: "Successfully Get Me", data: user, errors: { isRedis } })
+        return response({ res, status: 200, message: "Successfully Get Me from db", data: user })
     } catch {
         return response({ res, status: 500, message: "Internal Server Error" })
     }
