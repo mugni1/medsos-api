@@ -30,3 +30,11 @@ export const findUserByUsernameService = async (username: string) => {
         }
     })
 }
+
+export const findUserByIdService = async (id: string) => {
+    return await prisma.user.findUnique({
+        where: {
+            id: id
+        }
+    })
+}
