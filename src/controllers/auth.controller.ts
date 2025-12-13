@@ -75,7 +75,7 @@ export const me = async (req: Request, res: Response) => {
     const userId = req.userId
 
     try {
-        // check cache and return id cache exist
+        // check cache and return if cache exist
         const userCache = await redis.get(`user:${userId}`)
         if (userCache) {
             return response({ res, status: 200, message: "Successfully Get Me from redis", data: userCache })
