@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { response } from "../utils/response.js";
 import { loginSchemaValidate, registerSchemaValidate } from "../validations/auth.validate.js";
 import { comparePassword, hashedPassword } from "../utils/bcrypt.js";
-import { findUserByEmailService, registerService } from "../services/auth.service.js";
+import { findUserByEmailService, findUserByUsernameService, registerService } from "../services/auth.service.js";
 import { generateToken } from "../utils/jwt.js";
 
 export const register = async (req: Request, res: Response) => {
@@ -15,13 +15,25 @@ export const register = async (req: Request, res: Response) => {
         return response({ res, status: 400, message: 'Invalid input', errors });
     }
 
+    // check email
+    const emailExist = await findUserByEmailService(data.email)
+    if (emailExist) {
+        return response({ res, status: 400, message: 'Email Already Exist' });
+    }
+
+    // check username
+    const usernameExist = await findUserByUsernameService(data.username)
+    if (usernameExist) {
+        return response({ res, status: 400, message: 'Username Already Exist' });
+    }
+
     // hash password
     data.password = hashedPassword(data.password)
 
     // store
     const result = await registerService({ payload: data })
     if (!result) {
-        return response({ res, status: 500, message: "Iternal Server Error" })
+        return response({ res, status: 500, message: "Internal Server Error" })
     }
 
     // response

@@ -22,3 +22,11 @@ export const findUserByEmailService = async (email: string) => {
         }
     })
 }
+
+export const findUserByUsernameService = async (username: string) => {
+    return await prisma.user.findUnique({
+        where: {
+            username: username
+        }
+    })
+}
