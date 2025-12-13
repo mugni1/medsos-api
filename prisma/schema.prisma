@@ -20,6 +20,7 @@ model User {
   email          String  @unique @db.VarChar(225)
   password       String? @db.Text
   avatarUrl      String? @db.Text
+  avatarId       String? @db.Text
   followingCount Int     @default(0)
   followerCount  Int     @default(0)
   postCount      Int     @default(0)

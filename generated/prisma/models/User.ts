@@ -45,6 +45,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   password: string | null
   avatarUrl: string | null
+  avatarId: string | null
   followingCount: number | null
   followerCount: number | null
   postCount: number | null
@@ -59,6 +60,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   password: string | null
   avatarUrl: string | null
+  avatarId: string | null
   followingCount: number | null
   followerCount: number | null
   postCount: number | null
@@ -73,6 +75,7 @@ export type UserCountAggregateOutputType = {
   email: number
   password: number
   avatarUrl: number
+  avatarId: number
   followingCount: number
   followerCount: number
   postCount: number
@@ -101,6 +104,7 @@ export type UserMinAggregateInputType = {
   email?: true
   password?: true
   avatarUrl?: true
+  avatarId?: true
   followingCount?: true
   followerCount?: true
   postCount?: true
@@ -115,6 +119,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   password?: true
   avatarUrl?: true
+  avatarId?: true
   followingCount?: true
   followerCount?: true
   postCount?: true
@@ -129,6 +134,7 @@ export type UserCountAggregateInputType = {
   email?: true
   password?: true
   avatarUrl?: true
+  avatarId?: true
   followingCount?: true
   followerCount?: true
   postCount?: true
@@ -230,6 +236,7 @@ export type UserGroupByOutputType = {
   email: string
   password: string | null
   avatarUrl: string | null
+  avatarId: string | null
   followingCount: number
   followerCount: number
   postCount: number
@@ -267,6 +274,7 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  avatarId?: Prisma.StringNullableFilter<"User"> | string | null
   followingCount?: Prisma.IntFilter<"User"> | number
   followerCount?: Prisma.IntFilter<"User"> | number
   postCount?: Prisma.IntFilter<"User"> | number
@@ -287,6 +295,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarId?: Prisma.SortOrderInput | Prisma.SortOrder
   followingCount?: Prisma.SortOrder
   followerCount?: Prisma.SortOrder
   postCount?: Prisma.SortOrder
@@ -310,6 +319,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  avatarId?: Prisma.StringNullableFilter<"User"> | string | null
   followingCount?: Prisma.IntFilter<"User"> | number
   followerCount?: Prisma.IntFilter<"User"> | number
   postCount?: Prisma.IntFilter<"User"> | number
@@ -330,6 +340,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarId?: Prisma.SortOrderInput | Prisma.SortOrder
   followingCount?: Prisma.SortOrder
   followerCount?: Prisma.SortOrder
   postCount?: Prisma.SortOrder
@@ -352,6 +363,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  avatarId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   followingCount?: Prisma.IntWithAggregatesFilter<"User"> | number
   followerCount?: Prisma.IntWithAggregatesFilter<"User"> | number
   postCount?: Prisma.IntWithAggregatesFilter<"User"> | number
@@ -366,6 +378,7 @@ export type UserCreateInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -386,6 +399,7 @@ export type UserUncheckedCreateInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -406,6 +420,7 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -426,6 +441,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -446,6 +462,7 @@ export type UserCreateManyInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -460,6 +477,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -474,6 +492,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -488,6 +507,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  avatarId?: Prisma.SortOrder
   followingCount?: Prisma.SortOrder
   followerCount?: Prisma.SortOrder
   postCount?: Prisma.SortOrder
@@ -508,6 +528,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  avatarId?: Prisma.SortOrder
   followingCount?: Prisma.SortOrder
   followerCount?: Prisma.SortOrder
   postCount?: Prisma.SortOrder
@@ -522,6 +543,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  avatarId?: Prisma.SortOrder
   followingCount?: Prisma.SortOrder
   followerCount?: Prisma.SortOrder
   postCount?: Prisma.SortOrder
@@ -651,6 +673,7 @@ export type UserCreateWithoutPostsInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -670,6 +693,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -705,6 +729,7 @@ export type UserUpdateWithoutPostsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -724,6 +749,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -743,6 +769,7 @@ export type UserCreateWithoutCommentsInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -762,6 +789,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -797,6 +825,7 @@ export type UserUpdateWithoutCommentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -816,6 +845,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -835,6 +865,7 @@ export type UserCreateWithoutLikesInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -854,6 +885,7 @@ export type UserUncheckedCreateWithoutLikesInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -889,6 +921,7 @@ export type UserUpdateWithoutLikesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -908,6 +941,7 @@ export type UserUncheckedUpdateWithoutLikesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -927,6 +961,7 @@ export type UserCreateWithoutFollowingsInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -946,6 +981,7 @@ export type UserUncheckedCreateWithoutFollowingsInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -970,6 +1006,7 @@ export type UserCreateWithoutFollowersInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -989,6 +1026,7 @@ export type UserUncheckedCreateWithoutFollowersInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -1024,6 +1062,7 @@ export type UserUpdateWithoutFollowingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1043,6 +1082,7 @@ export type UserUncheckedUpdateWithoutFollowingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1073,6 +1113,7 @@ export type UserUpdateWithoutFollowersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1092,6 +1133,7 @@ export type UserUncheckedUpdateWithoutFollowersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1111,6 +1153,7 @@ export type UserCreateWithoutBookmarksInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -1130,6 +1173,7 @@ export type UserUncheckedCreateWithoutBookmarksInput = {
   email: string
   password?: string | null
   avatarUrl?: string | null
+  avatarId?: string | null
   followingCount?: number
   followerCount?: number
   postCount?: number
@@ -1165,6 +1209,7 @@ export type UserUpdateWithoutBookmarksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1184,6 +1229,7 @@ export type UserUncheckedUpdateWithoutBookmarksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followingCount?: Prisma.IntFieldUpdateOperationsInput | number
   followerCount?: Prisma.IntFieldUpdateOperationsInput | number
   postCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1279,6 +1325,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   password?: boolean
   avatarUrl?: boolean
+  avatarId?: boolean
   followingCount?: boolean
   followerCount?: boolean
   postCount?: boolean
@@ -1300,6 +1347,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   password?: boolean
   avatarUrl?: boolean
+  avatarId?: boolean
   followingCount?: boolean
   followerCount?: boolean
   postCount?: boolean
@@ -1314,6 +1362,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   password?: boolean
   avatarUrl?: boolean
+  avatarId?: boolean
   followingCount?: boolean
   followerCount?: boolean
   postCount?: boolean
@@ -1328,6 +1377,7 @@ export type UserSelectScalar = {
   email?: boolean
   password?: boolean
   avatarUrl?: boolean
+  avatarId?: boolean
   followingCount?: boolean
   followerCount?: boolean
   postCount?: boolean
@@ -1335,7 +1385,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "username" | "email" | "password" | "avatarUrl" | "followingCount" | "followerCount" | "postCount" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "username" | "email" | "password" | "avatarUrl" | "avatarId" | "followingCount" | "followerCount" | "postCount" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   followers?: boolean | Prisma.User$followersArgs<ExtArgs>
@@ -1365,6 +1415,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     password: string | null
     avatarUrl: string | null
+    avatarId: string | null
     followingCount: number
     followerCount: number
     postCount: number
@@ -1805,6 +1856,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
+  readonly avatarId: Prisma.FieldRef<"User", 'String'>
   readonly followingCount: Prisma.FieldRef<"User", 'Int'>
   readonly followerCount: Prisma.FieldRef<"User", 'Int'>
   readonly postCount: Prisma.FieldRef<"User", 'Int'>
