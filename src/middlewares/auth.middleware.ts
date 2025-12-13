@@ -19,11 +19,14 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         return response({ res, status: 401, message: "Invalid Token" })
     }
 
-    // check user
-    const user = await findUserByIdService(decoded.id)
-    if (!user) {
-        return response({ res, status: 401, message: "Invalid Token" })
+    try {
+        const user = await findUserByIdService(decoded.id)
+        if (!user) {
+            return response({ res, status: 401, message: "Invalid Token" })
+        }
+        req.userId = user.id
+        next()
+    } catch {
+        return response({ res, status: 500, message: "Intenal Server Error" })
     }
-    req.userId = user.id
-    next()
 }
