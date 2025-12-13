@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String  @id @default(cuid())
+  name           String  @db.VarChar(50)
+  username       String  @unique @db.VarChar(20)
+  email          String  @unique @db.VarChar(225)
+  password       String? @db.Text
+  avatarUrl      String? @db.Text
+  followingCount Int     @default(0)
+  followerCount  Int     @default(0)
+  postCount      Int     @default(0)
+
+  posts      Post[]
+  followers  Follow[]   @relation("Following") // kasih nama biar gak ketukar
+  followings Follow[]   @relation("Follower") // kasih nama biar gak ketukar
+  comments   Comment[]
+  likes      Like[]
+  bookmarks  Bookmark[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id           String     @id @default(cuid())
+  caption      String?    @db.Text
+  imageUrl     String?    @db.Text
+  imageId      String?    @db.Text
+  commentCount Int        @default(0)
+  likeCount    Int        @default(0)
+  authorId     String     @db.Text
+  author       User       @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  comments     Comment[]
+  likes        Like[]
+  bookmarks    Bookmark[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  userId    String   @db.Text
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId    String   @db.Text
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  userId    String   @db.Text
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId    String   @db.Text
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId]) // userId dan PostId adalah primarykey tidak dapat duplicate
+}
+
+model Follow {
+  followerId  String   @db.Text
+  follower    User     @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  followingId String   @db.Text
+  following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@id([followerId, followingId]) // followerId dan followingId adalah primarykey tidak dapat duplicate
+}
+
+model Bookmark {
+  userId    String   @db.Text
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId    String   @db.Text
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+}
