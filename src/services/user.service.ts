@@ -1,15 +1,14 @@
-import { User } from "../../generated/prisma/client.js"
-import { UserGetPayload } from "../../generated/prisma/models.js"
 import { prisma } from "../lib/prisma.js"
 import { redis } from "../lib/redis.js"
+import { UserWithoutPassword } from "../types/user.type.js"
 
-export const getUserBySearchQueryService = async (keyword: string) => {
+export const getUserBySearchQueryService = async (keyword: string): Promise<UserWithoutPassword[] | null> => {
     const key = `GET_USER_BY_SEARCH_QUERY_SERVICE_${keyword}`
 
     // check from cache
     const cached = await redis.get(key)
     if (cached) {
-        return cached
+        return cached as UserWithoutPassword[]
     }
 
     // query to db
@@ -21,21 +20,19 @@ export const getUserBySearchQueryService = async (keyword: string) => {
                 { username: { contains: keyword, mode: 'insensitive' } },
             ]
         },
-        omit: {
-            password: true
-        }
+        omit: { password: true }
     })
     await redis.set(key, result, { ex: 60 * 5 })
     return result
 }
 
-export const getAllUserService = async () => {
+export const getAllUserService = async (): Promise<UserWithoutPassword[] | null> => {
     const key = `GET_ALL_USER_SERVICE`
 
     // check from cache
     const cached = await redis.get(key)
     if (cached) {
-        return cached
+        return cached as UserWithoutPassword[]
     }
 
     // query to db
@@ -46,11 +43,6 @@ export const getAllUserService = async () => {
     return result
 }
 
-type UserWithoutPassword = UserGetPayload<{
-    omit: {
-        password: true
-    }
-}>
 export const getUserByUsernameService = async (username: string): Promise<UserWithoutPassword | null> => {
     const key = `GET_USER_BY_USERNAME_SERVICE_${username}`
 
@@ -75,6 +67,7 @@ export const updateUserByIdService = async (
 ) => {
     await redis.del(`GET_ALL_USER_SERVICE`)
     await redis.del(`GET_USER_BY_USERNAME_SERVICE_${data.username}`)
+    await redis.del(`FIND_USER_BY_ID_SERVICE_${data.id}`)
     const searchKeys = await redis.keys(`GET_USER_BY_SEARCH_QUERY_SERVICE_*`)
     if (searchKeys.length > 0) {
         await redis.del(...searchKeys)
