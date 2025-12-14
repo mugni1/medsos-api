@@ -48,13 +48,11 @@ export const updateUserProfile = async (req: Request, res: Response) => {
     }
 
     try {
-        // check user by id
         const user = await findUserByIdService(req.userId as string)
         if (!user) {
             return response({ res, status: 404, message: "User Not Found" })
         }
 
-        // check username
         const userExist = await getUserByUsernameService(data.username)
         if (userExist && userExist.username != user.username) {
             return response({ res, status: 400, message: "Username Already Exist" })
