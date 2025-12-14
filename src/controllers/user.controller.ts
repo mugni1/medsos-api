@@ -52,17 +52,15 @@ export const updateUserProfile = async (req: Request, res: Response) => {
         if (!user) {
             return response({ res, status: 404, message: "User Not Found" })
         }
-
         const userExist = await getUserByUsernameService(data.username)
-        if (userExist && userExist.username != user.username) {
+        if (userExist) {
             return response({ res, status: 400, message: "Username Already Exist" })
-        } else {
-            const updated = await updateUserByIdService({
-                data: { id: user.id, username: user.username, name: user.name, email: user.email },
-                payload: { name: data.name, username: data.username, bio: data.bio }
-            })
-            return response({ res, status: 200, message: "Update User Successfully", data: updated })
         }
+        const updated = await updateUserByIdService({
+            data: { id: user.id, username: user.username, name: user.name, email: user.email },
+            payload: { name: data.name, username: data.username, bio: data.bio }
+        })
+        return response({ res, status: 200, message: "Update User Successfully", data: updated })
     } catch {
         return response({ res, status: 500, message: "Internal Server Error" })
     }
