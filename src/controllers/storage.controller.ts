@@ -8,8 +8,8 @@ export const Upload = async (req: Request, res: Response) => {
     if (!file) {
         return response({ res, message: "Missing File", status: 400 })
     }
-    if (file.size > 5 * 1024 * 1024) {
-        return response({ res, message: "Maximum File 5MB", status: 400 })
+    if (file.size > 4 * 1024 * 1024) {
+        return response({ res, message: "Maximum File 4MB", status: 400 })
     }
     if (!file.mimetype.startsWith("image")) {
         return response({ res, message: "Please Input Valid Image", status: 400 })

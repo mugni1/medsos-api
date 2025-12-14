@@ -9,7 +9,7 @@ import StorageRoute from "./routes/storage.route.js"
 const app = express()
 app.use(express.json())
 app.use(fileUpload({
-    limits: { fileSize: 6 * 1024 * 1024 },
+    limits: { fileSize: 5 * 1024 * 1024 },
 }));
 
 // routes
