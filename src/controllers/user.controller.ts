@@ -12,7 +12,7 @@ export const getUserByUsername = async (req: Request, res: Response) => {
     }
 }
 
-export const getUserBySeachQuery = async (req: Request, res: Response) => {
+export const getAllUserAndGetUserByQuery = async (req: Request, res: Response) => {
     const search = req.query.search as string
 
     if (!search) {
