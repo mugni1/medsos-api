@@ -66,18 +66,15 @@ export const updateUserByIdService = async (
     payload: { name: string, username: string, bio: string }
 ) => {
     await redis.del(`GET_ALL_USER_SERVICE`)
-    await redis.del(`GET_USER_BY_USERNAME_SERVICE_${data.username}`)
     await redis.del(`FIND_USER_BY_ID_SERVICE_${data.id}`)
+    await redis.del(`GET_USER_BY_USERNAME_SERVICE_${data.username}`)
+
     const searchKeys = await redis.keys(`GET_USER_BY_SEARCH_QUERY_SERVICE_*`)
-    if (searchKeys.length > 0) {
-        await redis.del(...searchKeys)
-    }
+    if (searchKeys.length > 0) { await redis.del(...searchKeys) }
 
     // query to db
     return await prisma.user.update({
-        where: {
-            id: data.id
-        },
+        where: { id: data.id },
         data: {
             name: payload.name,
             bio: payload.bio,
