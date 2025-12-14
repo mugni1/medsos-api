@@ -23,7 +23,7 @@ export const getUserBySearchQueryService = async (keyword: string) => {
             password: true
         }
     })
-    await redis.set(key, result, { ex: 60 * 30 })
+    await redis.set(key, result, { ex: 60 * 5 })
     return result
 }
 
