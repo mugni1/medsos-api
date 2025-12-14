@@ -21,6 +21,7 @@ model User {
   password       String? @db.Text
   avatarUrl      String? @db.Text
   avatarId       String? @db.Text
+  bio            String? @db.VarChar(225)
   followingCount Int     @default(0)
   followerCount  Int     @default(0)
   postCount      Int     @default(0)

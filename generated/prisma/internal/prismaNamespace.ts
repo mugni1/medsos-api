@@ -900,6 +900,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   avatarUrl: 'avatarUrl',
   avatarId: 'avatarId',
+  bio: 'bio',
   followingCount: 'followingCount',
   followerCount: 'followerCount',
   postCount: 'postCount',
