@@ -1,31 +1,32 @@
 import { Request, Response } from "express";
 import { response } from "../utils/response.js";
-import { findUserByUsernameService } from "../services/auth.service.js";
-import { redis } from "../lib/redis.js";
+import { getAllUserService, getUserBySearchQueryService, getUserByUsernameService } from "../services/user.service.js";
 
 export const getUserByUsername = async (req: Request, res: Response) => {
     const username = req.params.username
-    const key = `userbyusername:${username}`
+    try {
+        const data = await getUserByUsernameService(username)
+        return response({ res, message: "Get User By Username Successfully", status: 200, data })
+    } catch {
+        return response({ res, message: "Internal Server Error", status: 500 })
+    }
+}
 
-    // check params
-    if (!username) {
-        return response({ res, message: "Missing Parameter", status: 400 })
+export const getUserBySeachQuery = async (req: Request, res: Response) => {
+    const search = req.query.search as string
+
+    if (!search) {
+        try {
+            const data = await getAllUserService()
+            return response({ res, status: 200, message: "Get All User Successfully", data })
+        } catch {
+            return response({ res, message: "Internal Server Error", status: 500 })
+        }
     }
 
     try {
-        // check cache 
-        const userCache = await redis.get(key)
-        if (userCache) {
-            return response({ res, message: "Get User By Username From Redis Successfully", status: 200, data: userCache })
-        }
-
-        // query to db
-        const user = await findUserByUsernameService(username)
-        if (!user) {
-            return response({ res, message: "Not Found", status: 404 })
-        }
-        await redis.set(key, user, { ex: 60 * 30 })
-        return response({ res, message: "Get User By Username From DB Successfully", status: 200, data: user })
+        const data = await getUserBySearchQueryService(search)
+        return response({ res, status: 200, message: "Get User By Search Query Successfully", data })
     } catch {
         return response({ res, message: "Internal Server Error", status: 500 })
     }
