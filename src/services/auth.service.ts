@@ -34,12 +34,10 @@ export const findUserByIdService = async (id: string): Promise<UserWithoutPasswo
     // check from redis cache
     const cached = await redis.get(key)
     if (cached) {
-        console.log(`${key} from Redis`)
         return cached as UserWithoutPassword
     }
 
     // query to DB
-    console.log(`${key} from DB`)
     const result = await prisma.user.findUnique({
         where: { id: id },
         omit: { password: true }
