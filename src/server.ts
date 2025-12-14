@@ -17,3 +17,5 @@ app.use(`${version}/user`, UserRoute)
 app.listen(5050, () => {
     console.log("Server Up and Running")
 })
+
+export default app
