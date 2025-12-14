@@ -1,10 +1,14 @@
-import { userByIdKey } from "../keys/user.key.js";
+import { userAllKey, userByIdKey, userBySearchQueryKey } from "../keys/user.key.js";
 import { prisma } from "../lib/prisma.js";
 import { redis } from "../lib/redis.js";
 import { UserWithoutPassword } from "../types/user.type.js";
 import { RegisterPayload } from "../validations/auth.validate.js";
 
 export const registerService = async ({ payload }: { payload: RegisterPayload }) => {
+    // delete keys
+    await redis.del(userAllKey())
+
+    // store to DB
     return await prisma.user.create({
         data: {
             name: payload.name,
