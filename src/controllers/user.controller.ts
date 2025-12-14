@@ -40,7 +40,10 @@ export const getAllUserAndGetUserByQuery = async (req: Request, res: Response) =
 export const updateUserProfile = async (req: Request, res: Response) => {
     const { data, success, error } = updateUserProfileSchema.safeParse(req.body)
     if (!success) {
-        const errors = error.issues.map(err => ({ path: err.path.join('_'), message: err.message }))
+        const errors = error.issues.map(err => ({
+            path: err.path.join('_'),
+            message: err.message
+        }))
         return response({ res, status: 400, message: "Invalid Input", errors })
     }
 
@@ -56,10 +59,10 @@ export const updateUserProfile = async (req: Request, res: Response) => {
         if (userExist && userExist.username != user.username) {
             return response({ res, status: 400, message: "Username Already Exist" })
         } else {
-            const updated = await updateUserByIdService(
-                { id: user.id, username: user.username, name: user.name, email: user.email },
-                { name: data.name, username: data.username, bio: data.bio }
-            )
+            const updated = await updateUserByIdService({
+                data: { id: user.id, username: user.username, name: user.name, email: user.email },
+                payload: { name: data.name, username: data.username, bio: data.bio }
+            })
             return response({ res, status: 200, message: "Update User Successfully", data: updated })
         }
     } catch {

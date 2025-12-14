@@ -1,6 +1,6 @@
 import { prisma } from "../lib/prisma.js"
 import { redis } from "../lib/redis.js"
-import { UserWithoutPassword } from "../types/user.type.js"
+import { UpdateUserByIdServiceParam, UserWithoutPassword } from "../types/user.type.js"
 
 export const getUserBySearchQueryService = async (keyword: string): Promise<UserWithoutPassword[] | null> => {
     const key = `GET_USER_BY_SEARCH_QUERY_SERVICE_${keyword}`
@@ -61,16 +61,13 @@ export const getUserByUsernameService = async (username: string): Promise<UserWi
     return result
 }
 
-export const updateUserByIdService = async (
-    data: { id: string, username: string, name: string, email: string },
-    payload: { name: string, username: string, bio: string }
-) => {
+export const updateUserByIdService = async ({data, payload} : UpdateUserByIdServiceParam) => {
+    // delete keys
+    const searchKeys = await redis.keys(`GET_USER_BY_SEARCH_QUERY_SERVICE_*`)
+    if (searchKeys.length > 0) { await redis.del(...searchKeys) }
     await redis.del(`GET_ALL_USER_SERVICE`)
     await redis.del(`FIND_USER_BY_ID_SERVICE_${data.id}`)
     await redis.del(`GET_USER_BY_USERNAME_SERVICE_${data.username}`)
-
-    const searchKeys = await redis.keys(`GET_USER_BY_SEARCH_QUERY_SERVICE_*`)
-    if (searchKeys.length > 0) { await redis.del(...searchKeys) }
 
     // query to db
     return await prisma.user.update({
