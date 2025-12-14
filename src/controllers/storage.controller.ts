@@ -9,19 +9,26 @@ export const Upload = async (req: Request, res: Response) => {
         return response({ res, message: "Missing File", status: 400 })
     }
     try {
-        const result = await cloudinary.uploader.upload(file.tempFilePath, {
-            folder: "profile/images",
-            resource_type: "image",
-            transformation: [
+        const result = await new Promise<any>((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
                 {
-                    width: 300,
-                    height: 300,
-                    crop: "fill",
-                    gravity: "face",
-                    quality: "auto",
-                    fetch_format: "auto",
+                    folder: "profile/images",
+                    transformation: [
+                        {
+                            width: 300,
+                            height: 300,
+                            crop: "fill",
+                            gravity: "face",
+                            quality: "auto",
+                            fetch_format: "auto",
+                        },
+                    ],
                 },
-            ],
+                (error, result) => {
+                    if (error) reject(error)
+                    else resolve(result)
+                }
+            ).end(file.data)
         })
         const data = {
             secure_url: result.secure_url,

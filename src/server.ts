@@ -9,8 +9,6 @@ import StorageRoute from "./routes/storage.route.js"
 const app = express()
 app.use(express.json())
 app.use(fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
     limits: { fileSize: 5 * 1024 * 1024 },
 }));
 
@@ -22,7 +20,7 @@ app.use(`${version}/user`, UserRoute)
 app.use(`${version}/storage`, StorageRoute)
 
 // lintening
-app.listen(5050, () => {
+app.listen(5051, () => {
     console.log("Server Up and Running")
 })
 
