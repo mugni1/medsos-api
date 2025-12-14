@@ -1,12 +1,11 @@
+import { userAllKey, userByIdKey, userBySearchQueryKey, userByUsernameKey } from "../keys/user.key.js"
 import { prisma } from "../lib/prisma.js"
 import { redis } from "../lib/redis.js"
 import { UpdateUserByIdServiceParam, UserWithoutPassword } from "../types/user.type.js"
 
 export const getUserBySearchQueryService = async (keyword: string): Promise<UserWithoutPassword[] | null> => {
-    const key = `GET_USER_BY_SEARCH_QUERY_SERVICE_${keyword}`
-
     // check from cache
-    const cached = await redis.get(key)
+    const cached = await redis.get(userBySearchQueryKey(keyword))
     if (cached) {
         return cached as UserWithoutPassword[]
     }
@@ -22,15 +21,13 @@ export const getUserBySearchQueryService = async (keyword: string): Promise<User
         },
         omit: { password: true }
     })
-    await redis.set(key, result, { ex: 60 * 5 })
+    await redis.set(userBySearchQueryKey(keyword), result, { ex: 60 * 5 })
     return result
 }
 
 export const getAllUserService = async (): Promise<UserWithoutPassword[] | null> => {
-    const key = `GET_ALL_USER_SERVICE`
-
     // check from cache
-    const cached = await redis.get(key)
+    const cached = await redis.get(userAllKey())
     if (cached) {
         return cached as UserWithoutPassword[]
     }
@@ -39,15 +36,13 @@ export const getAllUserService = async (): Promise<UserWithoutPassword[] | null>
     const result = await prisma.user.findMany({
         omit: { password: true }
     })
-    await redis.set(key, result, { ex: 60 * 60 })
+    await redis.set(userAllKey(), result, { ex: 60 * 60 })
     return result
 }
 
 export const getUserByUsernameService = async (username: string): Promise<UserWithoutPassword | null> => {
-    const key = `GET_USER_BY_USERNAME_SERVICE_${username}`
-
     // check from redis cache
-    const cached = await redis.get(key)
+    const cached = await redis.get(userByUsernameKey(username))
     if (cached) {
         return cached as UserWithoutPassword
     }
@@ -57,17 +52,17 @@ export const getUserByUsernameService = async (username: string): Promise<UserWi
         where: { username },
         omit: { password: true }
     })
-    await redis.set(key, result, { ex: 60 * 30 })
+    await redis.set(userByUsernameKey(username), result, { ex: 60 * 30 })
     return result
 }
 
-export const updateUserByIdService = async ({data, payload} : UpdateUserByIdServiceParam) => {
+export const updateUserByIdService = async ({ data, payload }: UpdateUserByIdServiceParam) => {
     // delete keys
-    const searchKeys = await redis.keys(`GET_USER_BY_SEARCH_QUERY_SERVICE_*`)
+    const searchKeys = await redis.keys(userBySearchQueryKey("*"))
     if (searchKeys.length > 0) { await redis.del(...searchKeys) }
-    await redis.del(`GET_ALL_USER_SERVICE`)
-    await redis.del(`FIND_USER_BY_ID_SERVICE_${data.id}`)
-    await redis.del(`GET_USER_BY_USERNAME_SERVICE_${data.username}`)
+    await redis.del(userAllKey())
+    await redis.del(userByIdKey(data.id))
+    await redis.del(userByUsernameKey(data.username))
 
     // query to db
     return await prisma.user.update({

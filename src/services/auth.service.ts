@@ -1,3 +1,4 @@
+import { userByIdKey } from "../keys/user.key.js";
 import { prisma } from "../lib/prisma.js";
 import { redis } from "../lib/redis.js";
 import { UserWithoutPassword } from "../types/user.type.js";
@@ -29,10 +30,8 @@ export const findUserByUsernameService = async (username: string) => {
 }
 
 export const findUserByIdService = async (id: string): Promise<UserWithoutPassword | null> => {
-    const key = `FIND_USER_BY_ID_SERVICE_${id}`
-
     // check from redis cache
-    const cached = await redis.get(key)
+    const cached = await redis.get(userByIdKey(id))
     if (cached) {
         return cached as UserWithoutPassword
     }
@@ -42,6 +41,6 @@ export const findUserByIdService = async (id: string): Promise<UserWithoutPasswo
         where: { id: id },
         omit: { password: true }
     })
-    await redis.set(key, result, { ex: 60 * 30 })
+    await redis.set(userByIdKey(id), result, { ex: 60 * 30 })
     return result
 }
